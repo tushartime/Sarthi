@@ -34,6 +34,10 @@ Hosts can also track the progress of their leads in their sales cycle, and follo
 ### **Platform Demo Video**
 
 
+https://github.com/user-attachments/assets/3b2cf703-d567-47fa-88fa-ce5e8e2ff002
+
+
+
 ### **Screenshots**
 ![Sarthi Dashboard](./assets/dashboard-screenshot.png.png)
 
