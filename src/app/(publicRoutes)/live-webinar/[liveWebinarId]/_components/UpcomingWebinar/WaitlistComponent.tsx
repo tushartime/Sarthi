@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useAttendeeStore } from '@/store/useAttendeeStore';
-import { WebinarStatusEnum } from '@prisma/client';
+import { WebinarStatusEnum, type Attendee } from '@prisma/client';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -56,12 +56,7 @@ const WaitlistComponent = ({
       }
 
       if (res.data?.user) {
-        setAttendee({
-          id: res.data.user.id,
-          name: res.data.user.name,
-          email: res.data.user.email,
-          callStatus: 'PENDING',
-        })
+        setAttendee(res.data.user as Attendee)
       }
       toast.success(
       webinarStatus === WebinarStatusEnum.LIVE

@@ -4,7 +4,7 @@ import { WebinarFormState } from '@/store/useWebinarStore'
 import { onAuthenticateUser } from './auth'
 import { prismaClient } from '@/lib/prismaClient'
 import { revalidatePath } from 'next/cache'
-import { WebinarStatusEnum } from '@prisma/client'
+import { WebinarStatusEnum, CtaTypeEnum } from '@prisma/client'
 
 function combineDateTime(
   date: Date,
@@ -68,7 +68,7 @@ export const createWebinar = async (formData: WebinarFormState) => {
         startTime: combinedDateTime,
         tags: formData.cta.tags || [],
         ctaLabel: formData.cta.ctaLabel,
-        ctaType: formData.cta.ctaType,
+        ctaType: formData.cta.ctaType ?? CtaTypeEnum.BOOK_A_CALL,
         aiAgentId: formData.cta.aiAgent || null,
         priceId: formData.cta.priceId || null,
         lockChat: formData.additionalInfo.lockChat || false,

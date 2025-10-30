@@ -7,7 +7,12 @@ import { X } from 'lucide-react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CtaTypeEnum } from '@prisma/client'
 
-const CTAStep = () => {
+type CTAStepProps = {
+  assistants?: unknown[]
+  stripeProducts?: unknown[]
+}
+
+const CTAStep = ({}: CTAStepProps) => {
   const {
     formData,
     updateCTAField,

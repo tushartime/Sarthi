@@ -37,10 +37,8 @@ const LiveWebinarView = ({
 
     const handleCTAButtonClick = async () => {
     if (!channel) return
-    console.log('CTA button clicked', channel)
-    await channel.sendEvent({
-        type: 'open_cta_dialog',
-    })
+    // Placeholder: integrate CTA dialog logic without custom Stream Chat event
+    console.log('CTA button clicked')
     }
         useEffect(() => {
         const initChat = async () => {

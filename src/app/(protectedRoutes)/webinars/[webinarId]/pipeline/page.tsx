@@ -6,15 +6,9 @@ import PipelineLayout from './_components/PipelineLayout'
 import { AttendedTypeEnum } from '@prisma/client'
 import { formatColumnTitle } from './_components/utils'
 
-
-type Props = {
-  params: {
-    webinarId: string
-  }
-}   
-
-const Page = async ({ params }: Props) => {
-  const { webinarId } = await params
+const Page = async (props: unknown) => {
+  const { params } = props as { params: { webinarId: string } }
+  const { webinarId } = params
   const pipelineData=await getWebinarAttendance(webinarId)
   if (!pipelineData.data) {
   return (

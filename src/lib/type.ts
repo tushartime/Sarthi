@@ -1,4 +1,4 @@
-import { Attendee, Webinar, User } from '@prisma/client'
+import { Attendee, Webinar } from '@prisma/client'
 
 export type ValidationErrors = Record<string, string>
 
@@ -47,7 +47,7 @@ export const validateBasicInfo = (data: {
 export const validateCTA = (data: {
   ctaLabel?: string
   tags?: string[]
-  ctaType: string
+  ctaType?: string
   aiAgent?: string
 }): ValidationResult => {
   const errors: ValidationErrors = {}
@@ -90,7 +90,12 @@ export type AttendanceData = {
 }
 
 export type WebinarWithPresenter = Webinar & {
-  presenter: User
+  presenter: {
+    id: string
+    name: string
+    profileImage: string
+    stripeConnectId: string | null
+  }
 }
 
 export type StreamCallRecording = {

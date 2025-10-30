@@ -111,14 +111,7 @@ export const getWebinarAttendance = async (
                     },
                 })
 
-                result[type].users = attendances.map((attendance) => ({
-                id: attendance.user.id,
-                name: attendance.user.name,
-                email: attendance.user.email,
-                attendedAt: attendance.joinedAt,
-                stripeConnectId: null,
-                callStatus: attendance.user.callStatus,
-                }))
+                result[type].users = attendances.map((attendance) => attendance.user)
                 }
                 }
             }
