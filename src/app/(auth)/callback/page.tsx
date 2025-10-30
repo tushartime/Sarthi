@@ -1,7 +1,7 @@
 import { onAuthenticateUser } from '@/actions/auth'
 import { redirect } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
-import { Loader2, CheckCircle, AlertCircle } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 //TODO: Implement the auth callback page
 export const dynamic = 'force-dynamic'

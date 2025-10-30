@@ -6,9 +6,8 @@ import { Upload,Webcam } from 'lucide-react'
 import FeatureSectionLayout from './_components/FeatureSectionLayout'
 import UserInfoCard from '@/components/ReusableComponent/UserInfoCard'
 import Image from 'next/image'
-type Props = {}
 
-const Pages = (props: Props) => {
+const Pages = () => {
   return (
     <div className="w-full h-full mt-8 px-6 md:px-8 lg:px-10 xl:px-12">
       <div className="w-full flex flex-col sm:flex-row justify-between items-start gap-14">

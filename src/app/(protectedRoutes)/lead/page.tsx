@@ -5,9 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { leadData } from './__tests__/data';
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <div className="w-full h-screen flex flex-col px-6 md:px-8 lg:px-10 xl:px-12">
       <div className="w-full flex flex-col">

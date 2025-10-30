@@ -2,6 +2,7 @@
 import { WebinarWithPresenter } from '@/lib/type'
 import { MessageSquare, Users } from 'lucide-react'
 import { StreamChat } from 'stream-chat'
+import type { Channel } from 'stream-chat'
 import { ParticipantView, useCallStateHooks } from '@stream-io/video-react-sdk'
 import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -31,8 +32,7 @@ const LiveWebinarView = ({
     const viewerCount = useParticipantCount()
 
     const [chatClient, setChatClient] = useState<StreamChat | null>(null)
-    const [channel, setChannel] = useState<any>(null)
-    const [dialogOpen, setDialogOpen] = useState(false)
+    const [channel, setChannel] = useState<Channel | null>(null)
     const hostParticipant = participants.length > 0 ? participants[0] : null
 
     const handleCTAButtonClick = async () => {
@@ -77,12 +77,11 @@ const LiveWebinarView = ({
 
         useEffect(() => {
         if (chatClient && channel) {
-            channel.on((event: any) => {
-            if (event.type === 'open_cta_dialog' && isHost) {
-                setDialogOpen(true)
+            channel.on((event: unknown) => {
+            const typed = event as { type?: string }
+            if (typed.type === 'open_cta_dialog' && isHost) {
+                // no-op for now
             }
-
-            // console.log("New message:", event);s
             })
         }
         }, [chatClient, channel, isHost])

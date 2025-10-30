@@ -9,7 +9,6 @@ import {
   Users, 
   Zap, 
   BarChart3, 
-  Mic, 
   Shield,
   ArrowRight,
   Star,
@@ -231,13 +230,13 @@ export default function Home() {
                           </div>
                           <div className="space-y-3">
                             <div className="bg-purple-500/20 rounded-lg p-3">
-                              <p className="text-sm text-white">"Hi! I'm Sarah, your AI sales assistant. How can I help you today?"</p>
+                              <p className="text-sm text-white">&quot;Hi! I&apos;m Sarah, your AI sales assistant. How can I help you today?&quot;</p>
                             </div>
                             <div className="bg-gray-700 rounded-lg p-3">
-                              <p className="text-sm text-gray-300">"I'm interested in your webinar platform"</p>
+                              <p className="text-sm text-gray-300">&quot;I&apos;m interested in your webinar platform&quot;</p>
                             </div>
                             <div className="bg-purple-500/20 rounded-lg p-3">
-                              <p className="text-sm text-white">"Great! Let me show you our features..."</p>
+                              <p className="text-sm text-white">&quot;Great! Let me show you our features...&quot;</p>
                             </div>
                           </div>
                         </div>

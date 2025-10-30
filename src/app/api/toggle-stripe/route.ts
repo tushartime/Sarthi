@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { onAuthenticateUser } from '@/actions/auth';
-import { PrismaClient } from '@prisma/client';
 import { prismaClient } from '@/lib/prismaClient';
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     const userExist = await onAuthenticateUser();
     if (!userExist?.user) {

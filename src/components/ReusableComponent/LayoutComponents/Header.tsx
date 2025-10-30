@@ -1,5 +1,4 @@
 'use client'
-import { User } from '@prisma/client'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter, usePathname } from 'next/navigation'
@@ -7,10 +6,9 @@ import React from 'react'
 import { Zap } from 'lucide-react'
 import PurpleIcon from '../PurpleIcon'
 import CreateWebinarButton from '../CreateWebinarButton'
-type Props = { user: User }
 
 //TODO: Stripe Subscription, Assistant,
-const Header = ({ user }: Props) => {
+const Header = () => {
   const pathname = usePathname()
   const router = useRouter()
 

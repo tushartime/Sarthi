@@ -1,9 +1,7 @@
 'use client'
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
@@ -16,9 +14,7 @@ import CTAStep from './CTAStep'
 import AdditionalInfoStep from './AdditionalInfoStep'
 import SuccessStep from './SuccessStep'
 
-type Props = {}
-
-const CreateWebinarButton = (props: Props) => {
+const CreateWebinarButton = () => {
   const { isModalOpen, setModalOpen,isComplete, setComplete,resetForm} = useWebinarStore()
   const [webinarLink,setWebinarLink]=useState('')
   const steps = [

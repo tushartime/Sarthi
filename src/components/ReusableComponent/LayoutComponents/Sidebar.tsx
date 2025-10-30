@@ -6,9 +6,7 @@ import Link from 'next/link'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { UserButton } from '@clerk/nextjs'
 import { Sparkles } from 'lucide-react'
-type Props = {}
-
-const Sidebar = (props: Props) => {
+const Sidebar = () => {
   const pathname = usePathname()
 
   return (

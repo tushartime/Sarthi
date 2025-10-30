@@ -4,11 +4,9 @@
 
 import { onAuthenticateUser } from '@/actions/auth';
 import { LucideAlertCircle, LucideCheckCircle2 } from 'lucide-react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { StripeToggleButton } from './StripeToggleButton';
-
-type Props = {};
 
 const Page = () => {
   const router = useRouter();

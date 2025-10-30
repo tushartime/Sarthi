@@ -8,9 +8,7 @@ import React from 'react'
 import WebinarCard from './_components/WebinarCard'
 import { Webinar } from '@prisma/client'
 
-type Props = {}
-
-const Page = async (props: Props) => {
+const Page = async () => {
   const checkUser = await onAuthenticateUser()
   if (!checkUser.user) {
     redirect('/')

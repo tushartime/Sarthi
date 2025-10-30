@@ -7,9 +7,7 @@ import { X } from 'lucide-react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CtaTypeEnum } from '@prisma/client'
 
-type Props = {}
-
-const CTAStep = (props: Props) => {
+const CTAStep = () => {
   const {
     formData,
     updateCTAField,
@@ -18,7 +16,7 @@ const CTAStep = (props: Props) => {
     getStepValidationErrors,
   } = useWebinarStore()
   const [tagInput,setTagInput]=useState('')
-  const { ctaLabel, tags, aiAgent, priceId, ctaType } = formData.cta
+  const { ctaLabel, tags } = formData.cta
   const errors=getStepValidationErrors('cta')
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
