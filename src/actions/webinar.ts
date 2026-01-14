@@ -22,8 +22,15 @@ function combineDateTime(
     hours = 0
   }
 
-  const result = new Date(date)
-  result.setHours(hours, minutes, 0, 0)
+  // Create a new date using the date's year, month, and day
+  // Normalize to local timezone to avoid timezone conversion issues
+  const dateObj = new Date(date)
+  const year = dateObj.getFullYear()
+  const month = dateObj.getMonth()
+  const day = dateObj.getDate()
+  
+  // Create new date with normalized date and specified time
+  const result = new Date(year, month, day, hours, minutes, 0, 0)
   return result
 }
 export const createWebinar = async (formData: WebinarFormState) => {
@@ -53,11 +60,21 @@ export const createWebinar = async (formData: WebinarFormState) => {
     formData.basicInfo.timeFormat || 'AM'
     )
     const now = new Date()
+    
+    console.log('Date validation:', {
+      inputDate: formData.basicInfo.date,
+      inputTime: formData.basicInfo.time,
+      timeFormat: formData.basicInfo.timeFormat,
+      combinedDateTime: combinedDateTime.toISOString(),
+      now: now.toISOString(),
+      isPast: combinedDateTime < now,
+      diffMinutes: (combinedDateTime.getTime() - now.getTime()) / (1000 * 60)
+    })
 
-    if (combinedDateTime < now) {
+    if (combinedDateTime <= now) {
     return {
         status: 400,
-        message: 'Webinar date and time cannot be in the past',
+        message: 'Webinar date and time must be in the future',
     }
     }
 
