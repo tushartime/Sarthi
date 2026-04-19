@@ -55,28 +55,10 @@ export const createWebinar = async (formData: WebinarFormState) => {
     }
 
     const combinedDateTime = combineDateTime(
-    formData.basicInfo.date,
-    formData.basicInfo.time,
-    formData.basicInfo.timeFormat || 'AM'
+      formData.basicInfo.date,
+      formData.basicInfo.time,
+      formData.basicInfo.timeFormat || 'AM'
     )
-    const now = new Date()
-    
-    console.log('Date validation:', {
-      inputDate: formData.basicInfo.date,
-      inputTime: formData.basicInfo.time,
-      timeFormat: formData.basicInfo.timeFormat,
-      combinedDateTime: combinedDateTime.toISOString(),
-      now: now.toISOString(),
-      isPast: combinedDateTime < now,
-      diffMinutes: (combinedDateTime.getTime() - now.getTime()) / (1000 * 60)
-    })
-
-    if (combinedDateTime <= now) {
-    return {
-        status: 400,
-        message: 'Webinar date and time must be in the future',
-    }
-    }
 
     const webinar = await prismaClient.webinar.create({
     data: {

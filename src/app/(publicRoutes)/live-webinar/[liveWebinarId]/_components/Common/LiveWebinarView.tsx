@@ -7,6 +7,7 @@ import { ParticipantView, useCallStateHooks } from '@stream-io/video-react-sdk'
 import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { CtaTypeEnum } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   showChat: boolean
@@ -27,6 +28,7 @@ const LiveWebinarView = ({
   userId,
   userToken,
 }: Props) => {
+    const router = useRouter()
     const { useParticipantCount, useParticipants } = useCallStateHooks()
     const participants = useParticipants()
     const viewerCount = useParticipantCount()
@@ -36,32 +38,40 @@ const LiveWebinarView = ({
     const hostParticipant = participants.length > 0 ? participants[0] : null
 
     const handleCTAButtonClick = async () => {
-    if (!channel) return
-    // Placeholder: integrate CTA dialog logic without custom Stream Chat event
-    console.log('CTA button clicked')
+    // Navigate to AI agent page for this webinar
+    router.push(`/demo/agent/${webinar.id}`)
     }
         useEffect(() => {
         const initChat = async () => {
+            try {
+            if (!process.env.NEXT_PUBLIC_STREAM_API_KEY || !userToken) {
+                return
+            }
+
             const client = StreamChat.getInstance(
-            process.env.NEXT_PUBLIC_STREAM_API_KEY!
+                process.env.NEXT_PUBLIC_STREAM_API_KEY
             )
 
             await client.connectUser(
-            {
+                {
                 id: userId,
                 name: username,
-            },
-            userToken
+                },
+                userToken
             )
 
             const channel = client.channel('livestream', webinar.id, {
-            name: webinar.title,
+                name: webinar.title,
             })
 
             await channel.watch()
 
             setChatClient(client)
             setChannel(channel)
+            } catch (e) {
+            // If Stream credentials are invalid, skip chat instead of crashing
+            console.error('Stream chat init failed, chat disabled for this webinar.', e)
+            }
         }
 
         initChat()
@@ -129,14 +139,12 @@ const LiveWebinarView = ({
             />
         </div>
         ) : (
-        <div className="w-full h-full flex items-center justify-center text-muted-foreground flex-col space-y-4">
-            <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
-            <Users
-                size={40}
-                className="text-muted-foreground"
+        <div className="w-full h-full flex items-center justify-center bg-black text-white">
+            <video
+            src="/demo.mp4"
+            controls
+            className="h-full w-full object-cover"
             />
-            </div>
-            <p>Waiting for stream to start...</p>
         </div>
         )}
         {isHost && (
@@ -152,15 +160,13 @@ const LiveWebinarView = ({
         {webinar?.title}
         </div>
     </div>
-    {isHost && (
-        <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-1">
         <Button onClick={handleCTAButtonClick}>
             {webinar.ctaType === CtaTypeEnum.BOOK_A_CALL
-            ? 'Book a Call'
-            : 'Buy Now'}
+            ? 'Talk to AI about booking'
+            : 'Talk to AI about buying'}
         </Button>
         </div>
-    )}
     </div>
     </div>
     </div>
