@@ -1,5 +1,5 @@
 import { CallStatusEnum } from '@prisma/client'
-import { Sparkle, Webcam, Home, Users, Settings } from 'lucide-react'
+import { Webcam, Home, Users, Settings } from 'lucide-react'
 export const sidebarData = [
   {
     id: 1,

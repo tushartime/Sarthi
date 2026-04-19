@@ -1,7 +1,42 @@
 "use client"
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { WebinarWithPresenter } from '@/lib/type'
+
+/** Narrow types for Web Speech API (DOM lib may omit SpeechRecognition). */
+type SpeechRecognitionResultLike = { readonly transcript: string }
+
+type SpeechRecognitionEventLike = {
+  readonly results: {
+    readonly length: number
+    [index: number]: {
+      readonly length: number
+      [index: number]: SpeechRecognitionResultLike
+    }
+  }
+}
+
+type SpeechRecognitionInstance = {
+  lang: string
+  interimResults: boolean
+  maxAlternatives: number
+  continuous: boolean
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null
+  onend: (() => void) | null
+  start: () => void
+  stop: () => void
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionInstance
+
+function getSpeechRecognitionCtor(): SpeechRecognitionConstructor | undefined {
+  if (typeof window === 'undefined') return undefined
+  const w = window as typeof window & {
+    SpeechRecognition?: SpeechRecognitionConstructor
+    webkitSpeechRecognition?: SpeechRecognitionConstructor
+  }
+  return w.SpeechRecognition ?? w.webkitSpeechRecognition
+}
 
 type Message = {
   from: 'user' | 'ai'
@@ -40,71 +75,80 @@ const AIBreakoutRoom = ({ webinar }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [isListening, setIsListening] = useState(false)
   const synthRef = useRef<SpeechSynthesis | null>(null)
-  const recognitionRef = useRef<any>(null)
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null)
   const isListeningRef = useRef(false)
 
-  useEffect(() => {
-    setMessages([{ from: 'ai', text: buildStarterPrompt(webinar) }])
-
-    if (typeof window !== 'undefined') {
-      if ('speechSynthesis' in window) {
-        synthRef.current = window.speechSynthesis
-      }
-
-      const SpeechRecognition =
-        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-      if (SpeechRecognition) {
-        const recognition = new SpeechRecognition()
-        recognition.lang = 'en-US'
-        recognition.interimResults = false
-        recognition.maxAlternatives = 1
-        recognition.continuous = true
-
-        recognition.onresult = (event: any) => {
-          const transcript = event.results[0][0].transcript as string
-          handleSendText(transcript)
-        }
-
-        recognition.onend = () => {
-          // If the user still expects us to listen, restart recognition
-          if (isListeningRef.current) {
-            try {
-              recognition.start()
-            } catch {
-              setIsListening(false)
-              isListeningRef.current = false
-            }
-          } else {
-            setIsListening(false)
-          }
-        }
-
-        recognitionRef.current = recognition
-      }
-    }
-  }, [])
-
-  const speak = (text: string) => {
+  const speak = useCallback((text: string) => {
     if (!synthRef.current) return
     synthRef.current.cancel()
     const utterance = new SpeechSynthesisUtterance(text)
     utterance.onstart = () => setIsSpeaking(true)
     utterance.onend = () => setIsSpeaking(false)
     synthRef.current.speak(utterance)
-  }
+  }, [])
 
-  const handleSendText = (text: string) => {
-    const trimmed = text.trim()
-    if (!trimmed) return
+  const handleSendText = useCallback(
+    (text: string) => {
+      const trimmed = text.trim()
+      if (!trimmed) return
 
-    const nextMessages: Message[] = [...messages, { from: 'user', text: trimmed }]
-    const aiReply = buildSalesReply(trimmed, webinar)
+      const aiReply = buildSalesReply(trimmed, webinar)
+      setMessages((prev) => [...prev, { from: 'user', text: trimmed }, { from: 'ai', text: aiReply }])
+      setInput('')
+      speak(aiReply)
+    },
+    [webinar, speak],
+  )
 
-    const updated = [...nextMessages, { from: 'ai', text: aiReply }]
-    setMessages(updated)
-    setInput('')
-    speak(aiReply)
-  }
+  useEffect(() => {
+    setMessages([{ from: 'ai', text: buildStarterPrompt(webinar) }])
+
+    if (typeof window === 'undefined') return
+
+    if ('speechSynthesis' in window) {
+      synthRef.current = window.speechSynthesis
+    }
+
+    const Ctor = getSpeechRecognitionCtor()
+    if (!Ctor) return
+
+    const recognition = new Ctor()
+    recognition.lang = 'en-US'
+    recognition.interimResults = false
+    recognition.maxAlternatives = 1
+    recognition.continuous = true
+
+    recognition.onresult = (event: SpeechRecognitionEventLike) => {
+      const transcript = event.results[0][0].transcript
+      handleSendText(transcript)
+    }
+
+    recognition.onend = () => {
+      if (isListeningRef.current) {
+        try {
+          recognition.start()
+        } catch {
+          setIsListening(false)
+          isListeningRef.current = false
+        }
+      } else {
+        setIsListening(false)
+      }
+    }
+
+    recognitionRef.current = recognition
+
+    return () => {
+      recognition.onresult = null
+      recognition.onend = null
+      try {
+        recognition.stop()
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null
+    }
+  }, [webinar, handleSendText])
 
   const handleSend = () => {
     handleSendText(input)

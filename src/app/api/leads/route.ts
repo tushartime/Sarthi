@@ -9,12 +9,11 @@ export const runtime = 'nodejs'
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => ({}))
-    const { email, name, webinarId, status, reason } = body as {
+    const { email, name, webinarId, status } = body as {
       email?: string
       name?: string
       webinarId?: string
       status?: string
-      reason?: string
     }
 
     if (!email || !name || !webinarId) {
