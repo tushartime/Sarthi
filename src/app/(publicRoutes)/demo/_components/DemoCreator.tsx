@@ -40,8 +40,8 @@ export const DemoCreator = () => {
       } catch {
         // ignore clipboard errors
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to create demo room')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create demo room')
     } finally {
       setIsLoading(false)
     }
