@@ -4,6 +4,9 @@ import Header from "@/components/ReusableComponent/LayoutComponents/Header";
 import { redirect } from 'next/navigation'
 import React from 'react'
 
+/** Auth uses `headers()`; avoid static prerender attempts during build. */
+export const dynamic = 'force-dynamic'
+
 type Props = {
   children: React.ReactNode
 }
