@@ -37,18 +37,22 @@ const WebinarUpcomingState = ({ webinar, currentUser }: Props) => {
         setLoading(false);
     }
     }
+  const isLive = webinar.webinarStatus === WebinarStatusEnum.LIVE
+
   return (
     <div className="w-full min-h-screen mx-auto max-w-[400px] flex flex-col justify-center items-center gap-8 py-20">
       <div className="space-y-6">
         <p className="text-3xl font-semibold text-primary text-center">
-          Seems like you are a little early
+          {isLive ? 'The webinar is live now' : 'Seems like you are a little early'}
         </p>
-        <CountdownTimer
-          targetDate={new Date(webinar.startTime)}
-          className="text-center"
-          webinarId={webinar.id}
-          webinarStatus={webinar.webinarStatus}
-        />
+        {!isLive && (
+          <CountdownTimer
+            targetDate={new Date(webinar.startTime)}
+            className="text-center"
+            webinarId={webinar.id}
+            webinarStatus={webinar.webinarStatus}
+          />
+        )}
       </div>
 
         <div className="space-y-6 w-full h-full flex justify-center items-center flex-col">
