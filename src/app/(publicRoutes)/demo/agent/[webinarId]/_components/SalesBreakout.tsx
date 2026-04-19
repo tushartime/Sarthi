@@ -1,8 +1,14 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { MicVAD } from '@ricky0123/vad-web'
 import type { WebinarWithPresenter } from '@/lib/type'
+
+/** Instance from `MicVAD.new` — typed narrowly so we don’t static-import vad-web (pulls onnxruntime). */
+type VadHandle = {
+  start: () => void
+  pause: () => void
+  destroy: () => void
+}
 
 type Msg = { role: 'user' | 'agent'; text: string }
 
@@ -78,7 +84,7 @@ export default function SalesBreakout({ webinar }: Props) {
     },
   ])
 
-  const vadRef = useRef<MicVAD | null>(null)
+  const vadRef = useRef<VadHandle | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const lastBlobUrlRef = useRef<string | null>(null)
 
@@ -179,6 +185,7 @@ export default function SalesBreakout({ webinar }: Props) {
     }
     if (vadRef.current) return
     setStatus('listening')
+    const { MicVAD } = await import('@ricky0123/vad-web')
     const vad = await MicVAD.new({
       baseAssetPath:
         'https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.29/dist/',
