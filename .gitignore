@@ -43,5 +43,5 @@ next-env.d.ts
 # Cursor IDE (local rules — do not publish)
 .cursor/
 
-# Graphify local knowledge-graph artifacts
+# Local generated graph / analysis output (not part of the app)
 graphify-out/
