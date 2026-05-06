@@ -1,4 +1,4 @@
-import { CallStatusEnum } from '@prisma/client'
+import { CallStatusEnum, LeadTypeEnum } from '@prisma/client'
 import { Webcam, Home, Users, Settings } from 'lucide-react'
 export const sidebarData = [
   {
@@ -47,6 +47,9 @@ export const potentialCustomer = [
     deletedAt: null,
     tags: ['New', 'Hot Lead'],
     callStatus: CallStatusEnum.COMPLETED,
+    leadType: LeadTypeEnum.UNKNOWN,
+    leadReason: null,
+    lastConversationAt: null,
   },
   {
     id: '2',
@@ -61,6 +64,9 @@ export const potentialCustomer = [
     deletedAt: null,
     tags: ['New', 'Hot Lead'],
     callStatus: CallStatusEnum.COMPLETED,
+    leadType: LeadTypeEnum.UNKNOWN,
+    leadReason: null,
+    lastConversationAt: null,
   },
   {
     id: '3',
@@ -75,6 +81,9 @@ export const potentialCustomer = [
     deletedAt: null,
     tags: ['New', 'Hot Lead'],
     callStatus: CallStatusEnum.COMPLETED,
+    leadType: LeadTypeEnum.UNKNOWN,
+    leadReason: null,
+    lastConversationAt: null,
   },
 ]
 
