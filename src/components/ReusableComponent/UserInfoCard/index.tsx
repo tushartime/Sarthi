@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import type { Attendee } from '@prisma/client'
 import React from "react";
 
+/** Mock home data only has name/email; pipeline passes full `Attendee` — both satisfy this pick. */
 type Props = {
   customer: Pick<Attendee, 'name' | 'email'>
   tags: string[]
