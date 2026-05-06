@@ -38,7 +38,7 @@ const AgentDemoPage = async ({ params }: Props) => {
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-6 py-6">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col overflow-x-visible px-6 py-6 pb-12">
         <div className="mb-3 text-[11px] text-neutral-400">
           This space is focused purely on conversation. The agent will use the webinar description to
           explain who the product is for, why it matters, and what next step makes sense for you.

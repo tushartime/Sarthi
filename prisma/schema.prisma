@@ -35,6 +35,13 @@ enum CallStatusEnum {
   COMPLETED
 }
 
+enum LeadTypeEnum {
+  HOT
+  WARM
+  COLD
+  UNKNOWN
+}
+
 model User {
   id           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         String       @db.VarChar(100)
@@ -94,6 +101,9 @@ model Attendee {
   email      String       @unique
   name       String       @db.VarChar(100)
   callStatus CallStatusEnum @default(PENDING)
+  leadType   LeadTypeEnum @default(UNKNOWN)
+  leadReason String?      @db.VarChar(255)
+  lastConversationAt DateTime?
   Attendance Attendance[]
   Webinar    Webinar[]
 

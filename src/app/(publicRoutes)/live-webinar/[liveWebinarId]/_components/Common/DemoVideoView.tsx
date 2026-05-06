@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import Link from 'next/link'
 import { WebinarWithPresenter } from '@/lib/type'
@@ -10,11 +10,14 @@ type Props = {
 const DemoVideoView = ({ webinar }: Props) => {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-black px-4 py-10 text-white">
-      <div className="flex w-full max-w-5xl flex-col gap-6 lg:flex-row">
-        <div className="aspect-video w-full overflow-hidden rounded-lg bg-neutral-900">
-          <video src="/demo.mp4" controls className="h-full w-full object-cover" />
+      <div className="flex w-full max-w-5xl flex-col gap-6 lg:flex-row lg:items-start">
+        <div className="min-w-0 flex-1">
+          <div className="aspect-video w-full overflow-hidden rounded-lg bg-neutral-900">
+            <video src="/demo.mp4" controls className="h-full w-full object-cover" />
+          </div>
         </div>
-        <div className="flex w-full max-w-sm flex-col justify-between gap-4 text-sm text-neutral-300">
+
+        <div className="flex w-full max-w-sm shrink-0 flex-col justify-between gap-4 text-sm text-neutral-300 lg:sticky lg:top-6">
           <div className="space-y-2">
             <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-500">
               Demo · Conversation-led sales
@@ -45,4 +48,3 @@ const DemoVideoView = ({ webinar }: Props) => {
 }
 
 export default DemoVideoView
-

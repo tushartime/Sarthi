@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Cursor IDE (local rules — do not publish)
+.cursor/
+
+# Graphify local knowledge-graph artifacts
+graphify-out/

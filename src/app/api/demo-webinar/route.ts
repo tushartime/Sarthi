@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server'
 import { prismaClient } from '@/lib/prismaClient'
+import {
+  DEMO_PRODUCT_DEFAULT_DESCRIPTION,
+  DEMO_PRODUCT_DEFAULT_TITLE,
+} from '@/lib/demo-product'
 import { CtaTypeEnum, WebinarStatusEnum } from '@prisma/client'
 
 export const dynamic = 'force-dynamic'
@@ -32,10 +36,8 @@ export async function POST(request: Request) {
 
     const webinar = await prismaClient.webinar.create({
       data: {
-        title: title?.trim() || 'AI breakout room demo',
-        description:
-          description?.trim() ||
-          'This is a demo conversation-led sales room. The AI breakout assistant welcomes visitors, learns what they care about, and guides them toward booking a call.',
+        title: title?.trim() || DEMO_PRODUCT_DEFAULT_TITLE,
+        description: description?.trim() || DEMO_PRODUCT_DEFAULT_DESCRIPTION,
         startTime: now,
         webinarStatus: WebinarStatusEnum.LIVE,
         tags: ['demo'],
