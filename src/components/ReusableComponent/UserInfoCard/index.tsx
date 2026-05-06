@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
-import { Attendee } from '@prisma/client'
+import type { Attendee } from '@prisma/client'
 import React from "react";
-type Props={
-    customer:Attendee
-    tags:string[]
-    className?:string
+
+type Props = {
+  customer: Pick<Attendee, 'name' | 'email'>
+  tags: string[]
+  className?: string
 }
 
 const UserInfoCard = ({ customer, tags, className }: Props) => {
