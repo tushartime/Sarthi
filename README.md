@@ -43,28 +43,7 @@ https://github.com/user-attachments/assets/3b2cf703-d567-47fa-88fa-ce5e8e2ff002
 
 ---
 
-## Features
 
-- 🎥 Live streaming Webinars
-- 🔁 Create unlimited streams
-- 🎛️ Stream through OBS for full customization or camera
-- 💳 Connect Stripe product
-- 🛒 Sell products on the webinar through CTAs
-- 🤖 Create AI agents
-- 📈 Webinar signup funnel to get leads
-- 🧩 Lead tracking and pipelines
-- 🧠🔀 Add AI agents to break out rooms
-- 🗣️🤝 AI agents can role play as setters / sales reps and more
-- 🤖✅ Close leads on auto pilot with AI agents
-- 📼 Access previous recordings of webinars *
-- 💸 Single line Stripe payment component
-- 💰 Accept payments from customers
-- 🚀 Production grade deployment on custom VPS
-- 🐳 Docker file for npm & bun
-- 📤 Resend sending emails
-- 🧩 Beautiful Minimal dark mode UI
-
----
 
 
 ## Tech Stack
